@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080711">
+<meta name="description" content="Game Space — a neon cyberpunk game library and mini arcade.">
+<title>Game Space — Masud Gaming 9</title>
+<style>
+:root{--bg:#080711;--panel:#111020;--panel2:#17152a;--purple:#b44cff;--blue:#35d8ff;--pink:#ff4fd8;--text:#f5f3ff;--muted:#aaa6c7;--line:#30284b;--green:#63ffb2}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#29134a 0,transparent 40%),radial-gradient(ellipse at 0% 35%,#101b42 0,transparent 34%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}button,input{font:inherit}button{cursor:pointer}a{color:var(--blue)}.wrap{width:min(1120px,92%);margin:auto}.topbar{position:sticky;top:0;z-index:20;background:#080711e8;backdrop-filter:blur(14px);border-bottom:1px solid #29223e}.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}.brand{font-weight:950;letter-spacing:1.4px;font-size:1.12rem}.brand span{color:var(--blue);text-shadow:0 0 16px #35d8ff88}.brand b{color:var(--purple)}.navlinks{display:flex;gap:16px;align-items:center}.navlinks a{text-decoration:none;color:var(--muted);font-size:.9rem}.navlinks a:hover{color:var(--blue)}.hero{padding:54px 0 34px;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:30px}.eyebrow{font-size:.76rem;letter-spacing:3px;text-transform:uppercase;color:var(--blue);font-weight:800}.hero h1{font-size:clamp(2.5rem,7vw,5.3rem);line-height:.94;letter-spacing:-3px;margin:14px 0 18px;font-weight:1000}.hero h1 em{font-style:normal;color:transparent;-webkit-text-stroke:1px var(--purple);text-shadow:0 0 24px #b44cff44}.hero p{color:var(--muted);line-height:1.7;max-width:600px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{border:1px solid var(--line);border-radius:11px;padding:11px 16px;background:var(--panel2);color:var(--text);font-weight:750;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn.primary{background:linear-gradient(100deg,#873bdf,#316de9);border-color:#9b71ff;box-shadow:0 0 24px #8d45ff30}.btn:hover{transform:translateY(-1px);filter:brightness(1.13)}.hero-art{border:1px solid #4b3474;border-radius:24px;min-height:265px;display:grid;place-items:center;position:relative;overflow:hidden;background:linear-gradient(145deg,#17102a,#091b32 70%);box-shadow:0 0 45px #7939ff20,inset 0 0 30px #2d7aff12}.hero-art:before,.hero-art:after{content:"";position:absolute;inset:-50%;background:repeating-linear-gradient(0deg,transparent 0 27px,#35d8ff12 28px 29px);transform:perspective(250px) rotateX(58deg) translateY(30%)}.hero-art:after{background:repeating-linear-gradient(90deg,transparent 0 27px,#b44cff15 28px 29px);transform:none}.orb{position:relative;z-index:1;width:155px;height:155px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f9d9ff,#b44cff 25%,#39218d 58%,#080711 72%);box-shadow:0 0 35px #b44cffaa,0 0 100px #3a7dff77;display:grid;place-items:center;font-size:3.1rem}.orb:after{content:"";position:absolute;width:225px;height:52px;border:3px solid var(--blue);border-radius:50%;transform:rotate(-25deg);box-shadow:0 0 18px #35d8ff88}.art-label{position:absolute;z-index:2;bottom:16px;left:18px;font-size:.72rem;letter-spacing:2px;color:#c6c2ff}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:6px auto 34px}.stat{padding:15px;background:#111020b8;border:1px solid var(--line);border-radius:14px}.stat strong{display:block;color:var(--blue);font-size:1.3rem}.stat small{color:var(--muted)}section{padding:26px 0 38px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:18px}.section-head h2{font-size:clamp(1.5rem,4vw,2rem);margin:6px 0 0}.section-head p{margin:0;color:var(--muted);font-size:.9rem}.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.search{flex:1;min-width:180px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:#0e0c19;color:var(--text);outline:none}.search:focus{border-color:var(--blue);box-shadow:0 0 0 3px #35d8ff1b}.filter{padding:10px 13px;border:1px solid var(--line);border-radius:10px;background:#111020;color:var(--muted)}.filter.active{border-color:var(--purple);color:#fff;background:#321b4d}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.game-card{border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#151326,#0e0d18);overflow:hidden;transition:.2s;min-width:0}.game-card:hover{transform:translateY(-3px);border-color:#7550a9;box-shadow:0 12px 30px #0005}.cover{height:130px;display:grid;place-items:center;font-size:3rem;position:relative;overflow:hidden}.cover:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 15px,#ffffff09 16px 17px)}.cover span{z-index:1;filter:drop-shadow(0 0 12px currentColor)}.cover.cyan{background:linear-gradient(135deg,#063b50,#13214a)}.cover.purple{background:linear-gradient(135deg,#32124d,#15153c)}.cover.pink{background:linear-gradient(135deg,#4b153b,#1b1640)}.cover.green{background:linear-gradient(135deg,#0d423b,#18213e)}.cover.orange{background:linear-gradient(135deg,#58301a,#251643)}.cover.blue{background:linear-gradient(135deg,#132c60,#24133e)}.card-body{padding:14px}.card-top{display:flex;justify-content:space-between;gap:8px;align-items:start}.card-top h3{margin:0;font-size:1rem}.tag{font-size:.68rem;padding:4px 7px;border-radius:6px;background:#25203a;color:#c8b7ff;white-space:nowrap}.card-body p{font-size:.83rem;line-height:1.55;color:var(--muted);min-height:40px;margin:9px 0 14px}.card-foot{display:flex;gap:8px}.card-foot .btn{flex:1;padding:9px;font-size:.83rem}.icon-btn{width:40px;flex:0 0 40px}.empty{color:var(--muted);padding:24px;text-align:center;border:1px dashed var(--line);border-radius:14px;grid-column:1/-1}.arcade{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.arcade-box{background:#111020;border:1px solid var(--line);border-radius:17px;padding:17px;min-width:0}.arcade-box h3{margin:0 0 6px}.arcade-box p{color:var(--muted);font-size:.85rem;line-height:1.5}.game-screen{background:#080711;border:1px solid #33284e;border-radius:12px;min-height:175px;padding:12px;display:grid;place-items:center;margin:12px 0}.ttt{display:grid;grid-template-columns:repeat(3,58px);gap:6px}.ttt button{height:58px;border-radius:9px;background:#151326;border:1px solid #45305f;color:var(--blue);font-size:1.7rem;font-weight:900}.ttt button:disabled{cursor:default}.game-controls{display:flex;gap:8px;flex-wrap:wrap}.game-controls .btn{padding:8px 11px;font-size:.82rem}.status{font-size:.82rem;color:var(--green);margin-top:9px;min-height:20px}.snake-wrap{width:100%;text-align:center}.snake-wrap canvas{display:block;width:min(100%,250px);height:auto;margin:auto;border-radius:8px;background:#05060b;border:1px solid #30304c;touch-action:none}.dpad{display:grid;grid-template-columns:repeat(3,38px);grid-template-rows:repeat(2,34px);gap:4px;justify-content:center;margin-top:8px}.dpad button{border:1px solid #45305f;background:#17152a;color:#fff;border-radius:7px}.dpad button:nth-child(1){grid-column:2;grid-row:1}.dpad button:nth-child(2){grid-column:1;grid-row:2}.dpad button:nth-child(3){grid-column:2;grid-row:2}.dpad button:nth-child(4){grid-column:3;grid-row:2}.clicker{width:100%;min-height:130px;border:1px solid #51367c;border-radius:13px;background:radial-gradient(circle,#2a1b49,#101020);color:#fff;font-size:1.1rem;font-weight:900}.clicker strong{display:block;font-size:2.4rem;color:var(--blue)}footer{border-top:1px solid var(--line);padding:24px 0 35px;color:var(--muted);font-size:.83rem}.footer-row{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.note{font-size:.78rem;color:var(--muted);line-height:1.6}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1b1730;border:1px solid #60488a;padding:10px 14px;border-radius:10px;z-index:50;display:none;max-width:90%;text-align:center}.toast.show{display:block}
+
+.phone-game-card{border:1px solid var(--line);border-radius:13px;background:#0e0d18;padding:13px;min-width:0}
+.phone-game-card h3{margin:0 0 6px;font-size:.98rem;overflow-wrap:anywhere}
+.phone-game-card p{margin:0 0 12px;color:var(--muted);font-size:.76rem;overflow-wrap:anywhere}
+.phone-game-card .card-foot{display:flex;gap:7px}
+.phone-game-card .btn{font-size:.8rem;padding:8px 10px;flex:1}
+
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:38px}.hero-art{min-height:210px}.grid{grid-template-columns:repeat(2,1fr)}.arcade{grid-template-columns:1fr}.navlinks{gap:10px}.navlinks a{font-size:.8rem}}
+@media(max-width:480px){.nav{align-items:flex-start}.navlinks{gap:8px;flex-wrap:wrap;justify-content:flex-end}.navlinks a{font-size:.75rem}.brand{font-size:.95rem}.hero h1{letter-spacing:-1.7px}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:1.1rem}.stat small{font-size:.7rem}.grid{grid-template-columns:1fr}.cover{height:145px}.section-head{align-items:start;flex-direction:column}.ttt{grid-template-columns:repeat(3,68px)}.ttt button{height:62px}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap nav">
+  <a class="brand" href="#" style="text-decoration:none;color:inherit">◈ <span>GAME</span><b> SPACE</b></a>
+  <nav class="navlinks"><a href="#library">Library</a><a href="#mygames">My phone games</a><a href="#arcade">Play games</a><a href="#about">About</a></nav>
+</div></header>
+<main>
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">/// YOUR NEON ARCADE</div>
+      <h1>ENTER THE<br><em>GAME SPACE</em></h1>
+      <p>Your neon gaming dashboard for game discoveries, your personal game list, and quick browser games. No downloads needed for the mini arcade.</p>
+      <div class="actions"><a class="btn primary" href="#arcade">▶ PLAY NOW</a><a class="btn" href="#library">⌕ EXPLORE LIBRARY</a></div>
+    </div>
+    <div class="hero-art" aria-label="Neon planet artwork"><div class="orb">✦</div><div class="art-label">SYSTEM ONLINE // PLAYER 001</div></div>
+  </section>
+  <div class="stats">
+    <div class="stat"><strong id="gameCount">6</strong><small>Games listed</small></div>
+    <div class="stat"><strong>3</strong><small>Playable mini-games</small></div>
+    <div class="stat"><strong>₹0</strong><small>Website hosting on free plan</small></div>
+  </div>
+  <section id="library">
+    <div class="section-head"><div><div class="eyebrow">01 // DISCOVER</div><h2>Game Library</h2></div><p>Find your next favourite game.</p></div>
+    <div class="tools">
+      <input class="search" id="search" type="search" placeholder="Search games..." aria-label="Search games">
+      <button class="filter active" data-filter="All">All games</button><button class="filter" data-filter="Arcade">Arcade</button><button class="filter" data-filter="Action">Action</button><button class="filter" data-filter="Racing">Racing</button><button class="filter" data-filter="Favorites">♥ Saved</button>
+    </div>
+    <div class="grid" id="gameGrid">
+      <article class="game-card" data-name="Neon Snake" data-category="Arcade" data-fav="false">
+        <div class="cover cyan"><span>🐍</span></div><div class="card-body"><div class="card-top"><h3>Neon Snake</h3><span class="tag">ARCADE</span></div><p>Grab glowing energy orbs, grow longer, and avoid crashing into yourself.</p><div class="card-foot"><a class="btn primary" href="#snake">Play now ↘</a><button class="btn icon-btn fav" aria-label="Save Neon Snake" title="Save game">♡</button></div></div>
+      </article>
+      <article class="game-card" data-name="Cyber Tic-Tac-Toe" data-category="Arcade" data-fav="false">
+        <div class="cover purple"><span>✕ ◯</span></div><div class="card-body"><div class="card-top"><h3>Cyber Tic-Tac-Toe</h3><span class="tag">PUZZLE</span></div><p>A quick classic. Get three marks in a row to win the round.</p><div class="card-foot"><a class="btn primary" href="#tictactoe">Play now ↘</a><button class="btn icon-btn fav" aria-label="Save Cyber Tic-Tac-Toe" title="Save game">♡</button></div></div>
+      </article>
+      <article class="game-card" data-name="Pulse Clicker" data-category="Arcade" data-fav="false">
+        <div class="cover pink"><span>⚡</span></div><div class="card-body"><div class="card-top"><h3>Pulse Clicker</h3><span class="tag">CLICKER</span></div><p>Tap the energy core as fast as you can and beat your own score.</p><div class="card-foot"><a class="btn primary" href="#clicker">Play now ↘</a><button class="btn icon-btn fav" aria-label="Save Pulse Clicker" title="Save game">♡</button></div></div></div>
+      </article>
+      <article class="game-card" data-name="Asphalt Legends Unite" data-category="Racing" data-fav="false">
+        <div class="cover orange"><span>🏎️</span></div><div class="card-body"><div class="card-top"><h3>Asphalt Legends Unite</h3><span class="tag">RACING</span></div><p>High-speed arcade racing with licensed cars and dramatic tracks.</p><div class="card-foot"><a class="btn" href="https://asphaltlegends.com/" target="_blank" rel="noopener">Official site ↗</a><button class="btn icon-btn fav" aria-label="Save Asphalt Legends Unite" title="Save game">♡</button></div></div>
+      </article>
+      <article class="game-card" data-name="Brawlhalla" data-category="Action" data-fav="false">
+        <div class="cover blue"><span>⚔️</span></div><div class="card-body"><div class="card-top"><h3>Brawlhalla</h3><span class="tag">ACTION</span></div><p>A free-to-play platform fighter with online battles and many characters.</p><div class="card-foot"><a class="btn" href="https://www.brawlhalla.com/" target="_blank" rel="noopener">Official site ↗</a><button class="btn icon-btn fav" aria-label="Save Brawlhalla" title="Save game">♡</button></div></div>
+      </article>
+      <article class="game-card" data-name="Trackmania" data-category="Racing" data-fav="false">
+        <div class="cover green"><span>🏁</span></div><div class="card-body"><div class="card-top"><h3>Trackmania</h3><span class="tag">RACING</span></div><p>Time-trial racing focused on precision, speed, and creative tracks.</p><div class="card-foot"><a class="btn" href="https://www.trackmania.com/" target="_blank" rel="noopener">Official site ↗</a><button class="btn icon-btn fav" aria-label="Save Trackmania" title="Save game">♡</button></div></div></div>
+      </article>
+    </div>
+    <p class="note">The external titles above are listings, not games hosted by this website. Availability, platform support, and pricing can vary. Use their official sites for details.</p>
+  </section>
+  
+  <section id="mygames">
+    <div class="section-head"><div><div class="eyebrow">02 // YOUR DEVICE</div><h2>My Phone Games</h2></div><p>Your personal game launcher list.</p></div>
+    <div class="arcade-box">
+      <p style="margin-top:0;color:var(--muted);line-height:1.7">Add games that are already installed on your Android phone. This website cannot scan installed apps automatically, so you enter each game's name and (optionally) its Android package ID. The launch button will try to open the app; support varies by game and browser.</p>
+      <form id="phoneGameForm" class="tools" style="margin-bottom:12px">
+        <input class="search" id="phoneGameName" placeholder="Game name (e.g. Minecraft)" aria-label="Game name" required>
+        <input class="search" id="phoneGamePackage" placeholder="Optional package ID (e.g. com.mojang.minecraftpe)" aria-label="Android package ID">
+        <button class="btn primary" type="submit">＋ Add game</button>
+      </form>
+      <div id="phoneGamesList" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr))"></div>
+      <p class="note">Tip: the package ID is not the game's display name. If you don't know it, add the game name only; you can still keep a personal list. Saved entries stay in this browser on this device.</p>
+    </div>
+  </section>
+  <section id="arcade">
+    <div class="section-head"><div><div class="eyebrow">02 // INSERT COIN</div><h2>Mini Arcade</h2></div><p>Playable right here in your browser.</p></div>
+    <div class="arcade">
+      <div class="arcade-box" id="snake"><h3>🐍 Neon Snake</h3><p>Collect the cyan dots. Use the arrow buttons or your keyboard.</p>
+        <div class="game-screen"><div class="snake-wrap"><canvas id="snakeCanvas" width="240" height="240" aria-label="Snake game board"></canvas><div class="dpad"><button data-dir="up" aria-label="Up">▲</button><button data-dir="left" aria-label="Left">◀</button><button data-dir="down" aria-label="Down">▼</button><button data-dir="right" aria-label="Right">▶</button></div><div class="status" id="snakeStatus">Score: 0 — press Start</div></div></div>
+        <div class="game-controls"><button class="btn primary" id="snakeStart">▶ Start / Restart</button><button class="btn" id="snakePause">Ⅱ Pause</button></div>
+      </div>
+      <div class="arcade-box" id="tictactoe"><h3>✕ Cyber Tic-Tac-Toe</h3><p>Play against a friend on the same phone. X goes first.</p>
+        <div class="game-screen"><div><div class="ttt" id="tttBoard" aria-label="Tic tac toe board"></div><div class="status" id="tttStatus">Your move: X</div></div></div>
+        <div class="game-controls"><button class="btn primary" id="tttReset">↻ New round</button></div>
+      </div>
+      <div class="arcade-box" id="clicker"><h3>⚡ Pulse Clicker</h3><p>Tap the core for 10 seconds. See how many pulses you can create.</p>
+        <div class="game-screen"><button class="clicker" id="clickTarget" disabled>READY<strong id="clickScore">0</strong><span id="clickLabel">Press Start below</span></button></div>
+        <div class="game-controls"><button class="btn primary" id="clickStart">▶ Start 10s round</button></div><div class="status" id="clickStatus">Best score: 0</div>
+      </div>
+    </div>
+  </section>
+  <section id="about"><div class="section-head"><div><div class="eyebrow">04 // ABOUT THIS PROJECT</div><h2>Your space. Your rules.</h2></div></div><div class="arcade-box"><p style="margin:0;color:var(--muted);line-height:1.8">Game Space is a starter gaming website developed by <strong style="color:var(--blue)">Masud Gaming 9</strong>, using plain HTML, CSS, and JavaScript. It works on phones and computers, needs no paid libraries, and can be hosted on GitHub Pages. Saved favourites and your personal phone-game list stay in this browser on this device. A website cannot automatically inspect all installed Android apps.</p></div></section>
+</div>
+</main>
+<footer><div class="wrap footer-row"><span>◈ GAME SPACE <span style="color:var(--blue)">//</span> NEON ARCADE</span><span>Developed by <strong style="color:var(--blue)">Masud Gaming 9</strong> • Free static website</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const toast = (msg) => { const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); };
+
+  // Search, category filters, and locally saved favourites.
+  let activeFilter='All';
+  let saved=[];
+  try { saved=JSON.parse(localStorage.getItem('gamespace-favourites')||'[]'); } catch(e) { saved=[]; }
+  const cards=$$('.game-card');
+  cards.forEach(card=>{
+    const name=card.dataset.name, button=card.querySelector('.fav');
+    const paint=()=>{const on=saved.includes(name);button.textContent=on?'♥':'♡';button.style.color=on?'#ff4fd8':'';card.dataset.fav=String(on);button.setAttribute('aria-pressed',String(on));};
+    paint();
+    button.addEventListener('click',()=>{saved=saved.includes(name)?saved.filter(x=>x!==name):[...saved,name];try{localStorage.setItem('gamespace-favourites',JSON.stringify(saved));}catch(e){}paint();applyFilters();});
+  });
+  function applyFilters(){
+    const q=$('#search').value.trim().toLowerCase();
+    let visible=0;
+    cards.forEach(c=>{const okText=(c.dataset.name+' '+c.dataset.category+' '+c.innerText).toLowerCase().includes(q);const okCat=activeFilter==='All'||(activeFilter==='Favorites'?saved.includes(c.dataset.name):c.dataset.category===activeFilter);c.style.display=okText&&okCat?'':'none';if(okText&&okCat)visible++;});
+    $('#gameCount').textContent=cards.length;
+    let empty=$('#noGames');if(!visible){if(!empty){empty=document.createElement('div');empty.id='noGames';empty.className='empty';empty.textContent='No games found. Try another search or category.';$('#gameGrid').append(empty);}}else if(empty)empty.remove();
+  }
+  $$('.filter').forEach(b=>b.addEventListener('click',()=>{$$('.filter').forEach(x=>x.classList.toggle('active',x===b));activeFilter=b.dataset.filter;applyFilters();}));
+  $('#search').addEventListener('input',applyFilters);
+
+  // Tic-tac-toe: local two-player game.
+  const board=$('#tttBoard');let cells=Array(9).fill(''),turn='X',done=false;
+  function checkWinner(a){const lines=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];for(const l of lines)if(a[l[0]]&&a[l[0]]===a[l[1]]&&a[l[1]]===a[l[2]])return a[l[0]];return a.every(Boolean)?'draw':null;}
+  function renderTTT(){board.innerHTML='';cells.forEach((v,i)=>{const b=document.createElement('button');b.textContent=v;b.setAttribute('aria-label','Square '+(i+1)+(v?', '+v:''));b.disabled=!!v||done;b.addEventListener('click',()=>{if(done||cells[i])return;cells[i]=turn;const winner=checkWinner(cells);if(winner){done=true;$('#tttStatus').textContent=winner==='draw'?'Draw — start another round!':winner+' wins the round!';}else{turn=turn==='X'?'O':'X';$('#tttStatus').textContent='Your move: '+turn;}renderTTT();});board.append(b);});}
+  $('#tttReset').addEventListener('click',()=>{cells=Array(9).fill('');turn='X';done=false;$('#tttStatus').textContent='Your move: X';renderTTT();});renderTTT();
+
+  // Pulse clicker: 10 second rounds.
+  let score=0,best=0,timeLeft=10,timer=null,running=false;
+  try{best=Number(localStorage.getItem('gamespace-clicker-best')||0)}catch(e){}
+  function showClick(){ $('#clickScore').textContent=score;$('#clickLabel').textContent=running?timeLeft+'s left':(timeLeft===0?'Round over!':'Press Start below');$('#clickTarget').disabled=!running;$('#clickStatus').textContent='Best score: '+best; }
+  $('#clickStart').addEventListener('click',()=>{clearInterval(timer);score=0;timeLeft=10;running=true;showClick();timer=setInterval(()=>{timeLeft--;if(timeLeft<=0){timeLeft=0;running=false;clearInterval(timer);if(score>best){best=score;try{localStorage.setItem('gamespace-clicker-best',String(best))}catch(e){}toast('New personal best!');}showClick();}else showClick();},1000);});
+  $('#clickTarget').addEventListener('click',()=>{if(running){score++;$('#clickScore').textContent=score;$('#clickLabel').textContent=timeLeft+'s left';}});showClick();
+
+  // Snake game uses a fixed logical grid and canvas; touch buttons work on phones.
+  const canvas=$('#snakeCanvas'),ctx=canvas.getContext('2d'),N=15,C=16;
+  let snake,food,dir,nextDir,scoreSnake=0,snakeTimer=null,paused=true,over=false;
+  function randomFood(){let p;do{p={x:Math.floor(Math.random()*N),y:Math.floor(Math.random()*N)}}while(snake.some(s=>s.x===p.x&&s.y===p.y));return p;}
+  function drawSnake(){ctx.fillStyle='#05060b';ctx.fillRect(0,0,240,240);ctx.strokeStyle='#14162b';ctx.lineWidth=.5;for(let i=0;i<=N;i++){ctx.beginPath();ctx.moveTo(i*C,0);ctx.lineTo(i*C,240);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*C);ctx.lineTo(240,i*C);ctx.stroke();}
+    if(food){ctx.fillStyle='#35d8ff';ctx.shadowColor='#35d8ff';ctx.shadowBlur=12;ctx.beginPath();ctx.arc(food.x*C+C/2,food.y*C+C/2,5,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;}
+    (snake||[]).forEach((p,i)=>{ctx.fillStyle=i===0?'#e8fdff':'#65ffcb';ctx.shadowColor=i===0?'#35d8ff':'#63ffb2';ctx.shadowBlur=i===0?10:4;ctx.fillRect(p.x*C+2,p.y*C+2,C-4,C-4);});ctx.shadowBlur=0;
+    if(paused&&!over){ctx.fillStyle='#ffffffcc';ctx.font='bold 13px system-ui';ctx.textAlign='center';ctx.fillText('PRESS START',120,120);}
+    if(over){ctx.fillStyle='#ff7de5';ctx.font='bold 16px system-ui';ctx.textAlign='center';ctx.fillText('GAME OVER',120,116);ctx.fillStyle='#ffffff';ctx.font='12px system-ui';ctx.fillText('Tap Start / Restart',120,137);}
+  }
+  function startSnake(){clearInterval(snakeTimer);snake=[{x:7,y:7},{x:6,y:7},{x:5,y:7}];dir={x:1,y:0};nextDir={x:1,y:0};scoreSnake=0;food=randomFood();paused=false;over=false;$('#snakeStatus').textContent='Score: 0';drawSnake();snakeTimer=setInterval(tickSnake,145);}
+  function tickSnake(){if(paused||over)return;dir=nextDir;const head={x:snake[0].x+dir.x,y:snake[0].y+dir.y};if(head.x<0||head.x>=N||head.y<0||head.y>=N||snake.some((p,i)=>i>0&&p.x===head.x&&p.y===head.y)){over=true;clearInterval(snakeTimer);$('#snakeStatus').textContent='Game over — score: '+scoreSnake;drawSnake();return;}snake.unshift(head);if(head.x===food.x&&head.y===food.y){scoreSnake++;food=randomFood();$('#snakeStatus').textContent='Score: '+scoreSnake;}else snake.pop();drawSnake();}
+  function setDir(name){const d={up:{x:0,y:-1},down:{x:0,y:1},left:{x:-1,y:0},right:{x:1,y:0}}[name];if(!d)return;if(d.x===-dir.x&&d.y===-dir.y)return;nextDir=d;}
+  $('#snakeStart').addEventListener('click',startSnake);
+  $('#snakePause').addEventListener('click',()=>{if(!snake)return;paused=!paused;$('#snakePause').textContent=paused?'▶ Resume':'Ⅱ Pause';drawSnake();});
+  $$('[data-dir]').forEach(b=>b.addEventListener('click',()=>setDir(b.dataset.dir)));
+  document.addEventListener('keydown',e=>{const map={ArrowUp:'up',w:'up',ArrowDown:'down',s:'down',ArrowLeft:'left',a:'left',ArrowRight:'right',d:'right'};if(map[e.key]&&document.activeElement.tagName!=='INPUT'){setDir(map[e.key]);if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))e.preventDefault();}});
+  snake=[{x:7,y:7},{x:6,y:7},{x:5,y:7}];food={x:10,y:7};drawSnake();
+
+  // Personal Android game list. A website cannot enumerate installed apps;
+  // users add entries themselves. Launching a package is best-effort only.
+  const phoneForm=$('#phoneGameForm'), phoneName=$('#phoneGameName'), phonePackage=$('#phoneGamePackage'), phoneList=$('#phoneGamesList');
+  let phoneGames=[];
+  try{phoneGames=JSON.parse(localStorage.getItem('gamespace-phone-games')||'[]');if(!Array.isArray(phoneGames))phoneGames=[];}catch(e){phoneGames=[];}
+  function safeText(value){return String(value).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+  function renderPhoneGames(){
+    phoneList.innerHTML='';
+    if(!phoneGames.length){const empty=document.createElement('div');empty.className='empty';empty.textContent='No phone games added yet. Use the form above to add one.';phoneList.append(empty);return;}
+    phoneGames.forEach((g,i)=>{
+      const card=document.createElement('article');card.className='phone-game-card';
+      const title=document.createElement('h3');title.textContent='🎮 '+g.name;card.append(title);
+      const info=document.createElement('p');info.textContent=g.pkg||'Name saved — package ID not provided';card.append(info);
+      const foot=document.createElement('div');foot.className='card-foot';
+      const launch=document.createElement('button');launch.className='btn primary';launch.textContent='▶ Try open';
+      launch.addEventListener('click',()=>{
+        if(!g.pkg){toast('Add the Android package ID to try launching this game.');return;}
+        if(!/^[a-zA-Z0-9_]+(\\.[a-zA-Z0-9_]+)+$/.test(g.pkg)){toast('That package ID does not look valid.');return;}
+        // Best-effort Android launcher intent. Some browsers/apps block this.
+        const intent='intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package='+g.pkg+';end';
+        window.location.href=intent;
+        setTimeout(()=>toast('If nothing opened, this game/browser may not support web launching.'),900);
+      });
+      const remove=document.createElement('button');remove.className='btn';remove.textContent='Remove';
+      remove.addEventListener('click',()=>{phoneGames.splice(i,1);savePhoneGames();renderPhoneGames();});
+      foot.append(launch,remove);card.append(foot);phoneList.append(card);
+    });
+  }
+  function savePhoneGames(){try{localStorage.setItem('gamespace-phone-games',JSON.stringify(phoneGames));}catch(e){toast('Could not save here; browser storage may be disabled.');}}
+  phoneForm.addEventListener('submit',e=>{
+    e.preventDefault();const name=phoneName.value.trim();const pkg=phonePackage.value.trim();
+    if(!name)return;
+    if(pkg&&!/^[a-zA-Z0-9_]+(\\.[a-zA-Z0-9_]+)+$/.test(pkg)){toast('Please check the package ID format.');return;}
+    if(phoneGames.some(g=>g.name.toLowerCase()===name.toLowerCase())){toast('That game is already on your list.');return;}
+    phoneGames.push({name,pkg});savePhoneGames();renderPhoneGames();phoneForm.reset();toast('Game added to your personal list.');
+  });
+  renderPhoneGames();
+})();
+</script>
+</body>
+</html>
