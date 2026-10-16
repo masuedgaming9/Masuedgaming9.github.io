@@ -1,0 +1,485 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ FLEXVERT - Ultimate File Converter</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- pdf-lib for PDF merge/split -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0d0f17;
+            color: #f3f4f6;
+        }
+        .glow-card {
+            background: rgba(22, 27, 46, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glow-button {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+        .glow-button:hover {
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.7);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <div>
+        <nav class="border-b border-gray-800 bg-gray-900/50 backdrop-blur-md sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="bg-indigo-600 p-2 rounded-xl">
+                        <i data-lucide="zap" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500">
+                        FLEXVERT
+                    </span>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 bg-gray-800/80 px-4 py-1.5 rounded-full border border-gray-700 text-xs text-indigo-300 font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    VIP UNLOCKED - ALL TOOLS FREE
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <main class="max-w-6xl mx-auto px-4 py-10">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight">
+                    NO CAP. <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">CONVERT ANYTHING</span> IN SECONDS 🔥
+                </h1>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Fast, private, browser-based file conversion suite. Zero upload limits, pure performance.
+                </p>
+            </div>
+
+            <!-- Tool Tabs Navigation -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 mb-8">
+                <button onclick="switchTab('img2pdf')" id="btn-img2pdf" class="tab-btn glow-card p-3 rounded-2xl flex flex-col items-center gap-2 border-indigo-500 bg-indigo-500/20 text-indigo-300 font-semibold text-sm transition">
+                    <i data-lucide="file-check" class="w-5 h-5"></i>
+                    <span>Photo ➔ PDF</span>
+                </button>
+                <button onclick="switchTab('compress')" id="btn-compress" class="tab-btn glow-card p-3 rounded-2xl flex flex-col items-center gap-2 text-gray-400 font-semibold text-sm hover:text-white transition">
+                    <i data-lucide="shrink" class="w-5 h-5"></i>
+                    <span>Compressor</span>
+                </button>
+                <button onclick="switchTab('imgformat')" id="btn-imgformat" class="tab-btn glow-card p-3 rounded-2xl flex flex-col items-center gap-2 text-gray-400 font-semibold text-sm hover:text-white transition">
+                    <i data-lucide="image" class="w-5 h-5"></i>
+                    <span>Img Swap</span>
+                </button>
+                <button onclick="switchTab('audio')" id="btn-audio" class="tab-btn glow-card p-3 rounded-2xl flex flex-col items-center gap-2 text-gray-400 font-semibold text-sm hover:text-white transition">
+                    <i data-lucide="music" class="w-5 h-5"></i>
+                    <span>Audio Converter</span>
+                </button>
+                <button onclick="switchTab('pdfops')" id="btn-pdfops" class="tab-btn glow-card p-3 rounded-2xl flex flex-col items-center gap-2 text-gray-400 font-semibold text-sm hover:text-white transition">
+                    <i data-lucide="layers" class="w-5 h-5"></i>
+                    <span>Merge PDF</span>
+                </button>
+                <button onclick="switchTab('textconv')" id="btn-textconv" class="tab-btn glow-card p-3 rounded-2xl flex flex-col items-center gap-2 text-gray-400 font-semibold text-sm hover:text-white transition">
+                    <i data-lucide="file-text" class="w-5 h-5"></i>
+                    <span>Text Export</span>
+                </button>
+            </div>
+
+            <!-- Workspace Panels -->
+            <div class="glow-card p-8 rounded-3xl min-h-[350px]">
+                
+                <!-- 1. Photo to PDF -->
+                <div id="tool-img2pdf" class="tool-panel">
+                    <h2 class="text-2xl font-bold mb-2 flex items-center gap-2 text-indigo-400">
+                        <i data-lucide="file-check"></i> Image to PDF Generator
+                    </h2>
+                    <p class="text-gray-400 text-sm mb-6">Drop your photos (JPG, PNG, WebP) and turn them into a single high-quality PDF doc.</p>
+
+                    <div class="border-2 border-dashed border-gray-700 hover:border-indigo-500 rounded-2xl p-8 text-center transition mb-6 bg-gray-900/40">
+                        <input type="file" id="img2pdf-input" accept="image/*" multiple class="hidden" onchange="handleFileSelect(this, 'img2pdf-list')">
+                        <label for="img2pdf-input" class="cursor-pointer flex flex-col items-center gap-3">
+                            <i data-lucide="upload-cloud" class="w-12 h-12 text-indigo-400"></i>
+                            <span class="font-semibold text-gray-300">Click or Drag & Drop Photos Here</span>
+                            <span class="text-xs text-gray-500">Supports multiple uploads at once</span>
+                        </label>
+                    </div>
+
+                    <div id="img2pdf-list" class="text-sm text-indigo-300 mb-6 font-mono"></div>
+
+                    <button onclick="processImg2Pdf()" class="glow-button w-full py-4 rounded-xl font-extrabold text-white text-lg transition flex items-center justify-center gap-2">
+                        <span>CONVERT TO PDF NOW</span> <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- 2. Image Compressor -->
+                <div id="tool-compress" class="tool-panel hidden">
+                    <h2 class="text-2xl font-bold mb-2 flex items-center gap-2 text-purple-400">
+                        <i data-lucide="shrink"></i> Image Size Squeezer
+                    </h2>
+                    <p class="text-gray-400 text-sm mb-6">Compress huge photos without losing quality.</p>
+
+                    <div class="border-2 border-dashed border-gray-700 hover:border-purple-500 rounded-2xl p-8 text-center transition mb-6 bg-gray-900/40">
+                        <input type="file" id="compress-input" accept="image/*" class="hidden" onchange="handleFileSelect(this, 'compress-list')">
+                        <label for="compress-input" class="cursor-pointer flex flex-col items-center gap-3">
+                            <i data-lucide="image" class="w-12 h-12 text-purple-400"></i>
+                            <span class="font-semibold text-gray-300">Choose Image to Compress</span>
+                        </label>
+                    </div>
+
+                    <div id="compress-list" class="text-sm text-purple-300 mb-6 font-mono"></div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm text-gray-400 mb-2 font-semibold">Compression Level</label>
+                        <select id="compress-level" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-purple-500">
+                            <option value="0.7">Balanced Compression (70% Quality)</option>
+                            <option value="0.4">Maximum Compression (40% Quality)</option>
+                            <option value="0.9">Minimal Compression (90% Quality)</option>
+                        </select>
+                    </div>
+
+                    <button onclick="processCompress()" class="glow-button w-full py-4 rounded-xl font-extrabold text-white text-lg transition flex items-center justify-center gap-2">
+                        <span>COMPRESS FILE</span> <i data-lucide="zap" class="w-5 h-5"></i>
+                    </button>
+                    <div id="compress-result" class="mt-6 text-center"></div>
+                </div>
+
+                <!-- 3. Image Format Converter -->
+                <div id="tool-imgformat" class="tool-panel hidden">
+                    <h2 class="text-2xl font-bold mb-2 flex items-center gap-2 text-pink-400">
+                        <i data-lucide="repeat"></i> Format Swapper
+                    </h2>
+                    <p class="text-gray-400 text-sm mb-6">Convert any image instantly into JPG, PNG, or WEBP.</p>
+
+                    <div class="border-2 border-dashed border-gray-700 hover:border-pink-500 rounded-2xl p-8 text-center transition mb-6 bg-gray-900/40">
+                        <input type="file" id="format-input" accept="image/*" class="hidden" onchange="handleFileSelect(this, 'format-list')">
+                        <label for="format-input" class="cursor-pointer flex flex-col items-center gap-3">
+                            <i data-lucide="refresh-cw" class="w-12 h-12 text-pink-400"></i>
+                            <span class="font-semibold text-gray-300">Select Image File</span>
+                        </label>
+                    </div>
+
+                    <div id="format-list" class="text-sm text-pink-300 mb-6 font-mono"></div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm text-gray-400 mb-2 font-semibold">Convert Target Format</label>
+                        <select id="format-target" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500">
+                            <option value="image/png">PNG Format (.png)</option>
+                            <option value="image/jpeg">JPG Format (.jpg)</option>
+                            <option value="image/webp">WEBP Format (.webp)</option>
+                        </select>
+                    </div>
+
+                    <button onclick="processFormatSwap()" class="glow-button w-full py-4 rounded-xl font-extrabold text-white text-lg transition flex items-center justify-center gap-2">
+                        <span>SWAP FORMAT</span> <i data-lucide="arrow-right-left" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- 4. Audio Converter (WAV/Audio Extraction) -->
+                <div id="tool-audio" class="tool-panel hidden">
+                    <h2 class="text-2xl font-bold mb-2 flex items-center gap-2 text-emerald-400">
+                        <i data-lucide="music"></i> Audio Engine & Extractor
+                    </h2>
+                    <p class="text-gray-400 text-sm mb-6">Extract or re-encode audio to lossless WAV format instantly inside your browser.</p>
+
+                    <div class="border-2 border-dashed border-gray-700 hover:border-emerald-500 rounded-2xl p-8 text-center transition mb-6 bg-gray-900/40">
+                        <input type="file" id="audio-input" accept="audio/*,video/*" class="hidden" onchange="handleFileSelect(this, 'audio-list')">
+                        <label for="audio-input" class="cursor-pointer flex flex-col items-center gap-3">
+                            <i data-lucide="headphones" class="w-12 h-12 text-emerald-400"></i>
+                            <span class="font-semibold text-gray-300">Upload Audio or Video File</span>
+                        </label>
+                    </div>
+
+                    <div id="audio-list" class="text-sm text-emerald-300 mb-6 font-mono"></div>
+
+                    <button onclick="processAudioConvert()" class="glow-button w-full py-4 rounded-xl font-extrabold text-white text-lg transition flex items-center justify-center gap-2">
+                        <span>CONVERT TO WAV AUDIO</span> <i data-lucide="disc" class="w-5 h-5"></i>
+                    </button>
+                    <div id="audio-result" class="mt-6 text-center"></div>
+                </div>
+
+                <!-- 5. PDF Merge -->
+                <div id="tool-pdfops" class="tool-panel hidden">
+                    <h2 class="text-2xl font-bold mb-2 flex items-center gap-2 text-cyan-400">
+                        <i data-lucide="layers"></i> PDF Merger
+                    </h2>
+                    <p class="text-gray-400 text-sm mb-6">Combine multiple PDF files into one clean document.</p>
+
+                    <div class="border-2 border-dashed border-gray-700 hover:border-cyan-500 rounded-2xl p-8 text-center transition mb-6 bg-gray-900/40">
+                        <input type="file" id="pdfmerge-input" accept=".pdf" multiple class="hidden" onchange="handleFileSelect(this, 'pdfmerge-list')">
+                        <label for="pdfmerge-input" class="cursor-pointer flex flex-col items-center gap-3">
+                            <i data-lucide="file-plus" class="w-12 h-12 text-cyan-400"></i>
+                            <span class="font-semibold text-gray-300">Select Multiple PDF Files</span>
+                        </label>
+                    </div>
+
+                    <div id="pdfmerge-list" class="text-sm text-cyan-300 mb-6 font-mono"></div>
+
+                    <button onclick="processPdfMerge()" class="glow-button w-full py-4 rounded-xl font-extrabold text-white text-lg transition flex items-center justify-center gap-2">
+                        <span>MERGE PDFs NOW</span> <i data-lucide="combine" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- 6. Text/Code Converter -->
+                <div id="tool-textconv" class="tool-panel hidden">
+                    <h2 class="text-2xl font-bold mb-2 flex items-center gap-2 text-amber-400">
+                        <i data-lucide="file-text"></i> Text & Document Exporter
+                    </h2>
+                    <p class="text-gray-400 text-sm mb-6">Type or paste text and export directly into TXT, HTML, or JSON formats.</p>
+
+                    <textarea id="text-input" rows="5" placeholder="Type or paste your text content here..." class="w-full bg-gray-900 border border-gray-700 rounded-2xl p-4 text-white focus:outline-none focus:border-amber-500 mb-6 font-mono text-sm"></textarea>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <button onclick="exportText('txt')" class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-amber-300 font-bold py-3 rounded-xl transition">
+                            Save as .TXT
+                        </button>
+                        <button onclick="exportText('html')" class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-amber-300 font-bold py-3 rounded-xl transition">
+                            Save as .HTML
+                        </button>
+                        <button onclick="exportText('json')" class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-amber-300 font-bold py-3 rounded-xl transition">
+                            Save as .JSON
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Cool Footer -->
+    <footer class="border-t border-gray-800/80 bg-gray-950/80 py-6 text-center text-sm text-gray-500">
+        <p class="font-bold tracking-wide text-gray-400">
+            Made by AI <span class="text-pink-500">|</span> The Owner Masood Gaming 9 🔥
+        </p>
+        <p class="text-xs text-gray-600 mt-1">100% Client-Side Processing • No Server Uploads • Infinite Speed</p>
+    </footer>
+
+    <script>
+        // Init Lucide icons
+        lucide.createIcons();
+
+        // Switch Tabs
+        function switchTab(tabId) {
+            document.querySelectorAll('.tool-panel').forEach(panel => panel.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn glow-card p-3 rounded-2xl flex flex-col items-center gap-2 text-gray-400 font-semibold text-sm hover:text-white transition";
+            });
+
+            document.getElementById(`tool-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.className = "tab-btn glow-card p-3 rounded-2xl flex flex-col items-center gap-2 border-indigo-500 bg-indigo-500/20 text-indigo-300 font-semibold text-sm transition";
+        }
+
+        // Show selected filenames
+        function handleFileSelect(input, targetId) {
+            const list = document.getElementById(targetId);
+            if(input.files.length > 0) {
+                const names = Array.from(input.files).map(f => `📄 ${f.name} (${(f.size/1024).toFixed(1)} KB)`).join('<br>');
+                list.innerHTML = names;
+            } else {
+                list.innerHTML = '';
+            }
+        }
+
+        // 1. Image to PDF
+        async function processImg2Pdf() {
+            const input = document.getElementById('img2pdf-input');
+            if(!input.files.length) return alert("Upload at least one image bro!");
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+
+            for (let i = 0; i < input.files.length; i++) {
+                const file = input.files[i];
+                const imgData = await getBase64(file);
+                if (i > 0) pdf.addPage();
+                pdf.addImage(imgData, 'JPEG', 10, 10, 190, 0);
+            }
+
+            pdf.save("converted_documents.pdf");
+        }
+
+        // 2. Compress Image
+        async function processCompress() {
+            const input = document.getElementById('compress-input');
+            const quality = parseFloat(document.getElementById('compress-level').value);
+            if(!input.files.length) return alert("Select an image first!");
+
+            const file = input.files[0];
+            const imgData = await getBase64(file);
+
+            const img = new Image();
+            img.src = imgData;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                const compressed = canvas.toDataURL('image/jpeg', quality);
+                const resDiv = document.getElementById('compress-result');
+                resDiv.innerHTML = `
+                    <a href="${compressed}" download="compressed_${file.name}" class="glow-button inline-block py-3 px-8 rounded-xl font-extrabold text-white">
+                        DOWNLOAD COMPRESSED IMAGE 🔥
+                    </a>
+                `;
+            };
+        }
+
+        // 3. Swap Format
+        async function processFormatSwap() {
+            const input = document.getElementById('format-input');
+            const targetFormat = document.getElementById('format-target').value;
+            if(!input.files.length) return alert("Select an image to swap format!");
+
+            const file = input.files[0];
+            const imgData = await getBase64(file);
+
+            const img = new Image();
+            img.src = imgData;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                const newImg = canvas.toDataURL(targetFormat);
+                const ext = targetFormat.split('/')[1];
+                
+                const a = document.createElement('a');
+                a.href = newImg;
+                a.download = `converted_file.${ext}`;
+                a.click();
+            };
+        }
+
+        // 4. Audio Processing (Convert/Extract to WAV)
+        async function processAudioConvert() {
+            const input = document.getElementById('audio-input');
+            if(!input.files.length) return alert("Select an audio or video file!");
+
+            const file = input.files[0];
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const arrayBuffer = await file.arrayBuffer();
+            
+            try {
+                const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+                const wavBlob = audioBufferToWav(audioBuffer);
+                const url = URL.createObjectURL(wavBlob);
+
+                const resDiv = document.getElementById('audio-result');
+                resDiv.innerHTML = `
+                    <a href="${url}" download="extracted_audio.wav" class="glow-button inline-block py-3 px-8 rounded-xl font-extrabold text-white">
+                        DOWNLOAD .WAV AUDIO 🎵
+                    </a>
+                `;
+            } catch(e) {
+                alert("Couldn't process audio file format!");
+            }
+        }
+
+        // 5. PDF Merge
+        async function processPdfMerge() {
+            const input = document.getElementById('pdfmerge-input');
+            if(input.files.length < 2) return alert("Select at least 2 PDF files to merge!");
+
+            const mergedPdf = await PDFLib.PDFDocument.create();
+
+            for (let file of input.files) {
+                const bytes = await file.arrayBuffer();
+                const pdf = await PDFLib.PDFDocument.load(bytes);
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach(page => mergedPdf.addPage(page));
+            }
+
+            const mergedBytes = await mergedPdf.save();
+            const blob = new Blob([mergedBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'merged_document.pdf';
+            a.click();
+        }
+
+        // 6. Text Exporter
+        function exportText(format) {
+            const content = document.getElementById('text-input').value;
+            if(!content.trim()) return alert("Write or paste some text first!");
+
+            let mime = "text/plain";
+            let ext = "txt";
+            let finalContent = content;
+
+            if(format === 'html') {
+                mime = "text/html";
+                ext = "html";
+                finalContent = `<!DOCTYPE html><html><body><pre>${content}</pre></body></html>`;
+            } else if(format === 'json') {
+                mime = "application/json";
+                ext = "json";
+                finalContent = JSON.stringify({ content: content, timestamp: new Date() }, null, 2);
+            }
+
+            const blob = new Blob([finalContent], { type: mime });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `exported_text.${ext}`;
+            a.click();
+        }
+
+        // Helpers
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        function audioBufferToWav(buffer) {
+            let numOfChan = buffer.numberOfChannels,
+                length = buffer.length * numOfChan * 2 + 44,
+                out = new DataView(new ArrayBuffer(length)),
+                channels = [], i, sample,
+                offset = 0,
+                pos = 0;
+
+            function setUint16(data) { out.setUint16(pos, data, true); pos += 2; }
+            function setUint32(data) { out.setUint32(pos, data, true); pos += 4; }
+
+            setUint32(0x46464952); setUint32(length - 8); setUint32(0x45564157);
+            setUint32(0x20746d66); setUint32(16); setUint16(1); setUint16(numOfChan);
+            setUint32(buffer.sampleRate); setUint32(buffer.sampleRate * 2 * numOfChan);
+            setUint16(numOfChan * 2); setUint16(16); setUint32(0x61746164); setUint32(length - pos - 4);
+
+            for (i = 0; i < buffer.numberOfChannels; i++) channels.push(buffer.getChannelData(i));
+
+            while (pos < length) {
+                for (i = 0; i < numOfChan; i++) {
+                    sample = Math.max(-1, Math.min(1, channels[i][offset]));
+                    sample = (0.5 + sample < 0 ? sample * 32768 : sample * 32767) | 0;
+                    out.setInt16(pos, sample, true); pos += 2;
+                }
+                offset++;
+            }
+            return new Blob([out], { type: "audio/wav" });
+        }
+    </script>
+</body>
+</html>
+```
